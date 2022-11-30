@@ -134,6 +134,9 @@ namespace SnmpSharpNet
 			{
 				try
 				{
+					while (_socket.Available > 0) // flush socket before send
+						_socket.ReceiveFrom(inbuffer, ref remote);
+						
 					_socket.SendTo(buffer, bufferLength, SocketFlags.None, (EndPoint)netPeer);
 					recv = _socket.ReceiveFrom(inbuffer, ref remote);
 				}
